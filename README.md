@@ -113,9 +113,9 @@ python app.py
 ```
 
 **Access the API:**
-- Server: http://localhost:7860
-- Interactive docs: http://localhost:7860/docs
-- Health check: http://localhost:7860/health
+- Server: http://localhost:8000
+- Interactive docs: http://localhost:8000/docs
+- Health check: http://localhost:8000/health
 
 ## 🚀 **Deployment Options**
 

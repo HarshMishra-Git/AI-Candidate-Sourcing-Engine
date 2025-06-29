@@ -15,7 +15,7 @@ def test_local_api():
     
     # Test health endpoint
     try:
-        response = requests.get("http://localhost:7860/health", timeout=5)
+        response = requests.get("http://localhost:8000/health", timeout=5)
         if response.status_code == 200:
             print("✅ Health endpoint working")
             print(f"   Response: {response.json()}")
@@ -31,7 +31,7 @@ def test_local_api():
     
     try:
         response = requests.post(
-            "http://localhost:7860/huggingface",
+            "http://localhost:8000/huggingface",
             json={
                 "job_description": test_job,
                 "top_candidates": 3,

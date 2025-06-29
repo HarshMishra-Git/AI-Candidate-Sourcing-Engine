@@ -1,4 +1,4 @@
-# AI-Powered Recruitment Sourcing Agent
+# SynapseAI Sourcer
 
 🚀 **Synapse AI Hackathon Submission** - A comprehensive AI-powered recruitment sourcing agent that discovers LinkedIn candidates, scores them using advanced AI models, and generates personalized outreach messages.
 
@@ -29,6 +29,28 @@ This implementation **fully meets** all Synapse AI Hackathon requirements:
 ### 🎯 **Demo Job Description:**
 The system is tested with the exact Synapse job description: "Software Engineer, ML Research at Windsurf (Codeium)" - a Forbes AI 50 company building AI-powered developer tools.
 
+## 🚀 **Live Deployment**
+
+### **HuggingFace Spaces (Recommended)**
+**Live Demo**: [Your HuggingFace Spaces URL]
+
+**API Endpoints:**
+- `POST /match` - Complete candidate sourcing pipeline
+- `POST /huggingface` - Synapse hackathon format
+- `GET /health` - Health check
+- `GET /docs` - Interactive API documentation
+
+**Example API Request:**
+```bash
+curl -X POST "https://your-spaces-url.hf.space/huggingface" \
+     -H "Content-Type: application/json" \
+     -d '{
+       "job_description": "Senior Python Developer - 5+ years Django, React, AWS",
+       "top_candidates": 10,
+       "use_cache": true
+     }'
+```
+
 ## Features
 
 - 🔍 **Intelligent Candidate Discovery**: Search LinkedIn profiles using Google/SerpAPI
@@ -36,7 +58,7 @@ The system is tested with the exact Synapse job description: "Software Engineer,
 - ✉️ **Personalized Messages**: Generate custom outreach messages for each candidate
 - ⚡ **Scalable Processing**: Batch processing with async/threading support
 - 💾 **Smart Caching**: Avoid duplicate processing with intelligent caching
-- 🌐 **REST API**: Optional FastAPI endpoint for web deployment
+- 🌐 **REST API**: FastAPI endpoint for web deployment
 - 📈 **Analytics**: Comprehensive scoring and performance analytics
 
 ## Quick Start
@@ -54,16 +76,12 @@ The system is tested with the exact Synapse job description: "Software Engineer,
 1. **Clone and setup**:
 ```bash
 git clone <repository-url>
-cd ai-sourcing-agent
+cd SynapseAI-Sourcer
 ```
 
-2. **Install dependencies** (using uv or pip):
+2. **Install dependencies**:
 ```bash
-# Using uv (recommended)
-uv add requests beautifulsoup4 fastapi uvicorn pydantic trafilatura
-
-# Or using pip
-pip install requests beautifulsoup4 fastapi uvicorn pydantic trafilatura
+pip install -r requirements.txt
 ```
 
 3. **Set environment variables**:
@@ -82,11 +100,6 @@ export GOOGLE_SEARCH_ENGINE_ID="your_search_engine_id"  # Optional
 python main.py "Software Engineer, ML Research at Windsurf - Looking for Python developers with 3+ years experience"
 ```
 
-**Run demo:**
-```bash
-python demo.py
-```
-
 **Test Synapse Hackathon Job:**
 ```bash
 python test_synapse_job.py
@@ -96,64 +109,55 @@ python test_synapse_job.py
 
 **Start the API server:**
 ```bash
-python api.py
+python app.py
 ```
 
 **Access the API:**
-- Server: http://localhost:5000
-- Interactive docs: http://localhost:5000/docs
-- Health check: http://localhost:5000/health
+- Server: http://localhost:7860
+- Interactive docs: http://localhost:7860/docs
+- Health check: http://localhost:7860/health
 
-**Example API request:**
-```bash
-curl -X POST "http://localhost:5000/match" \
-     -H "Content-Type: application/json" \
-     -d '{
-       "job_description": "Senior Python Developer - 5+ years Django, React, AWS",
-       "top_candidates": 5,
-       "use_cache": true
-     }'
-```
+## 🚀 **Deployment Options**
 
-**HuggingFace Spaces API:**
-```bash
-curl -X POST "http://localhost:5000/huggingface" \
-     -H "Content-Type: application/json" \
-     -d '{
-       "job_description": "<your job description>",
-       "top_candidates": 10,
-       "use_cache": true
-     }'
-```
-- Returns: JSON with job_id, candidates_found, and top_candidates (with outreach messages) in Synapse format.
+### **1. HuggingFace Spaces (Recommended)**
 
-**Batch API:**
-```bash
-curl -X POST "http://localhost:5000/batch" \
-     -H "Content-Type: application/json" \
-     -d '{
-       "job_descriptions": ["job1 description", "job2 description"],
-       "top_candidates": 10,
-       "use_cache": true
-     }'
-```
-- Returns: List of results in Synapse format for each job.
+**Steps:**
+1. Create account at [huggingface.co](https://huggingface.co)
+2. Create new Space → Gradio → Python
+3. Upload your project files
+4. Set environment variables in Space settings
+5. Deploy!
+
+**Files needed:**
+- `app.py` (main entry point)
+- `requirements.txt`
+- All Python modules (`main.py`, `search.py`, etc.)
+- `README.md`
+
+### **2. Railway**
+
+**Steps:**
+1. Connect GitHub repository to Railway
+2. Set environment variables
+3. Deploy automatically
+
+### **3. Render**
+
+**Steps:**
+1. Connect GitHub repository to Render
+2. Set build command: `pip install -r requirements.txt`
+3. Set start command: `python app.py`
+4. Set environment variables
+5. Deploy!
 
 ## API Endpoints
 
 ### Main Endpoints
 
 - `POST /match` - Complete sourcing pipeline (search + score + messages)
-- `POST /search` - Search candidates only (faster)
-- `POST /score` - Score existing candidates
-- `POST /messages` - Generate messages for candidates
-
-### Management Endpoints
-
+- `POST /huggingface` - Synapse hackathon format
 - `GET /health` - System health check
 - `GET /config` - View configuration
-- `GET /cache/status` - Cache statistics
-- `DELETE /cache` - Clear cache
 
 ## Pipeline Components
 
@@ -198,81 +202,42 @@ BATCH_SIZE = 5
 TIMEOUT_SECONDS = 30
 ```
 
-## Example Output
+## 🏆 **Hackathon Submission**
 
-```json
-{
-  "job_description": "Software Engineer, ML Research...",
-  "top_candidates": [
-    {
-      "name": "John Smith",
-      "linkedin_url": "https://linkedin.com/in/johnsmith",
-      "fit_score": 8.5,
-      "score_breakdown": {
-        "education": 9,
-        "career_trajectory": 8,
-        "experience_match": 9,
-        "company_relevance": 7,
-        "location_match": 8,
-        "tenure": 8
-      },
-      "message": "Hi John, I saw your impressive work in ML research at Google...",
-      "reasoning": "Strong technical background with relevant ML experience..."
-    }
-  ],
-  "total_candidates_found": 18,
-  "scoring_summary": {
-    "average_score": 7.2,
-    "highest_score": 8.5,
-    "candidates_above_threshold": 5
-  },
-  "processing_time": 45.2
-}
-```
+### **Required Files:**
+- ✅ GitHub Repository with code
+- ✅ README with setup instructions
+- ✅ Demo Video (3 minutes max)
+- ✅ Brief Write-up (500 words max)
+- ✅ Live API endpoint (HuggingFace Spaces)
 
-## Troubleshooting
+### **Demo Video Checklist:**
+- [ ] Running agent on Windsurf job description
+- [ ] Candidates being discovered and scored
+- [ ] Generated outreach messages
+- [ ] API endpoint demonstration
 
-### Common Issues
+### **Write-up Topics:**
+- [ ] Approach and architecture
+- [ ] Challenges faced and solutions
+- [ ] Scaling to 100s of jobs
+- [ ] Technical decisions and trade-offs
 
-1. **No candidates found**
-   - Check search API credentials
-   - Verify job description has relevant keywords
-   - Try different search terms
+## 🤝 **About the Project**
 
-2. **Scoring failures**
-   - Verify Groq API key is valid
-   - Check API rate limits
-   - Review model availability
+This project was built for the **Synapse Annual First Ever AI Hackathon** - a challenge to build an autonomous AI agent that sources LinkedIn profiles at scale, scores candidates using fit score algorithms, and generates personalized outreach.
 
-3. **API errors**
-   - Ensure all dependencies are installed
-   - Check port availability (default: 5000)
-   - Verify environment variables
+**Built with:**
+- Python 3.8+
+- FastAPI
+- Groq API (LLaMA3 models)
+- Google Custom Search API
+- BeautifulSoup for web scraping
 
-### Performance Tips
+**Author:** [Your Name]
+**Hackathon:** Synapse Annual First Ever AI Hackathon
+**Submission Date:** June 30, 2025
 
-- Use caching for repeated searches
-- Process candidates in smaller batches
-- Consider using async endpoints for large jobs
+---
 
-## Architecture
-
-The system follows a modular, pipeline-based architecture:
-
-```
-Job Description → Requirements Extraction → Candidate Search → AI Scoring → Message Generation → Results
-```
-
-Each component can be used independently or as part of the complete pipeline.
-
-## License
-
-[Add your license information here]
-
-## Contributing
-
-[Add contribution guidelines here]
-
-**Bonus Features:**
-- Multi-source enrichment: The system is modular and can be extended to include GitHub, Twitter, or personal website data for improved fit scoring.
-- Confidence scoring: If candidate data is incomplete, the system can flag low-confidence results and fallback to template messages or scores.
+**Ready to build the future of recruiting?** 🚀

@@ -41,7 +41,7 @@ API_PORT = 5000
 def get_config() -> Dict[str, Any]:
     """Return application configuration dictionary"""
     return {
-        "groq_api_key": os.getenv(GROQ_API_KEY),
+        "groq_api_key": GROQ_API_KEY,
         "groq_base_url": GROQ_BASE_URL,
         "default_model": DEFAULT_MODEL,
         "alternative_model": ALTERNATIVE_MODEL,

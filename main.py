@@ -73,7 +73,7 @@ class SourcingAgent:
         """Check if results are cached and valid"""
         return cache_key in self.cache
     
-    def run_pipeline(self, job_description: str, use_cache: bool = True, top_candidates: int = 10) -> Dict[str, Any]:
+    def run_pipeline(self, job_description: str, use_cache: bool = False, top_candidates: int = 10) -> Dict[str, Any]:
         """Run the complete sourcing pipeline"""
         start_time = time.time()
         

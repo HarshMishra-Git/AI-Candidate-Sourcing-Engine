@@ -1,7 +1,7 @@
 [project]
-name = "repl-nix-workspace"
+name = "AI Sourcing"
 version = "0.1.0"
-description = "Add your description here"
+description = "This is the AI based Project using Groq Ai, LinkedIn and Google"
 requires-python = ">=3.11"
 dependencies = [
     "asyncio>=3.4.3",

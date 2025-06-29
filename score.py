@@ -65,7 +65,7 @@ JOB DESCRIPTION:
 
 CANDIDATE PROFILE:
 Name: {candidate.get('name', 'Unknown')}
-LinkedIn: {candidate.get('url', 'N/A')}
+LinkedIn: {candidate.get('linkedin_url', candidate.get('url', 'N/A'))}
 Profile Text: {candidate.get('profile_text', 'No profile text available')[:1500]}
 Profile Snippet: {candidate.get('snippet', 'No snippet available')}
 
@@ -73,6 +73,7 @@ Provide scores and brief reasoning."""
             }
         ]
 
+        print(f"[DEBUG] Scoring candidate: {candidate}")
         response = self.groq_client.make_request(messages)
         if not response:
             print(f"No response received for candidate: {candidate.get('name', 'Unknown')}")
@@ -104,11 +105,14 @@ Provide scores and brief reasoning."""
                             for criterion, weight in self.scoring_rubric.items() 
                             if criterion in sanitized_scores)
 
-            return {
+            # Propagate all original candidate fields
+            scored_candidate = candidate.copy()
+            scored_candidate.update({
                 "fit_score": round(total_score, 2),
                 "score_breakdown": sanitized_scores,
                 "reasoning": scores.get("reasoning", "No reasoning provided")[:500]  # Limit reasoning length
-            }
+            })
+            return scored_candidate
 
         except json.JSONDecodeError as e:
             print(f"JSON decode error for candidate {candidate.get('name', 'Unknown')}: {e}")

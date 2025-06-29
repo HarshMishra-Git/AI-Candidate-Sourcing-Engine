@@ -232,6 +232,7 @@ class LinkedInSearcher:
                     'profile_text': profile_info.get('profile_text', ''),
                     'snippet': headline
                 }
+                print(f"[DEBUG] Extracted candidate: {candidate}")
                 candidates.append(candidate)
                 time.sleep(0.5)
             except Exception as e:

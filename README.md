@@ -234,7 +234,7 @@ This project was built for the **Synapse Annual First Ever AI Hackathon** - a ch
 - Google Custom Search API
 - BeautifulSoup for web scraping
 
-**Author:** [Your Name]
+**Author:** [Harsh Mishra]
 **Hackathon:** Synapse Annual First Ever AI Hackathon
 **Submission Date:** June 30, 2025
 
